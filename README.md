@@ -26,11 +26,13 @@ The motor is driven directly by an R&S HMP4040 power supply at 0–6 V in 0.5 V 
 reported as $D = V / 5\,\text{V}$, i.e. $D \in \{0, 0.1, \dots, 1.2\}$. Current and RPM are logged at
 each point. The zero-voltage offset is subtracted before the analysis.
 
-![Thrust test bench](figures/test_setup_thrust.jpg)
+| Measurement principle | CAD of the bench |
+|:---:|:---:|
+| <img src="figures/thrust_setup.png" alt="Thrust measurement principle" width="380"> | <img src="figures/cad_motor_setup_3.png" alt="CAD model of the test bench" width="380"> |
 
-Figures: [measurement principle](figures/pdf/thrust_setup.pdf) ·
-[labelled test bench](figures/pdf/test_setup_thrust.pdf) ·
-[CAD of the bench](figures/cad_motor_setup_3.png)
+<p align="center">
+  <img src="figures/test_setup_thrust.png" alt="Thrust test bench" width="520">
+</p>
 
 ## Results
 
@@ -50,8 +52,10 @@ Values at the nominal operating point $D = 1$, mean ± standard deviation over t
 - The flight controller therefore uses two gains, $k_f^{+}$ for $D \geq 0$ and $k_f^{-}$ for $D < 0$,
   and scales reverse commands by $\sqrt{k_f^{+}/k_f^{-}} \approx 1.95$ (compensation factor $C_f = 2.0$).
 
-Figure: [thrust vs duty cycle, power and RPM](figures/pdf/thrust_characterization.pdf)
-(solid lines: fits $k_f D^2$, $c\,P^{2/3}$ and $k_n n^2$; points: mean over 3 repetitions).
+![Thrust vs duty cycle, power and RPM](figures/thrust_characterization.png)
+
+*Measured thrust vs PWM duty cycle, input power and RPM. Points: mean over 3 repetitions; solid lines:
+fits $k_f D^2$, $c\,P^{2/3}$ and $k_n n^2$.*
 
 ## Repository layout
 
@@ -61,7 +65,7 @@ Figure: [thrust vs duty cycle, power and RPM](figures/pdf/thrust_characterizatio
 | `data/` | Raw data: 12 folders `new_<config>_<rep>/`, each with 13 DigiVision exports `new_<config>_<rep>_<VV>.xlsx`, one per supply voltage (`VV` = 00, 05, …, 60 → 0.0–6.0 V). The torque samples are in sheet `Data`, column C. |
 | `prop_rpm_data.xlsx` | Current (mA) and RPM at each voltage step, one sheet per run. The `old_A_*` / `old_B_*` sheets are from earlier tests whose raw data are not included. |
 | `tikz_data/` | Output of `maxon.m` used by the thesis figures: `thrust_vs_pwm.dat`, `thrust_vs_power.dat`, `thrust_vs_rpm.dat`. |
-| `figures/` | Figure sources copied from the thesis (standalone LaTeX/TikZ), the bench photo and the CAD render; `figures/pdf/` has the compiled figures. |
+| `figures/` | Figures as PNG, their sources copied from the thesis (standalone LaTeX/TikZ `.tex`), the bench photo used by `test_setup_thrust.tex` and the CAD render. |
 | `Photos/` | Photos of the test bench (26/03/2025): `test_bench_overview.jpg` (wide view of the bench), `test_bench_front.jpg` and `test_bench_front_hires.jpg` (cropped front view, normal and high resolution). |
 
 ## How to reproduce
