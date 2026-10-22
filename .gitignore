@@ -1,0 +1,21 @@
+# MATLAB
+*.asv
+*.m~
+*.mat
+*.mex*
+slprj/
+
+# LaTeX build files (figures/)
+*.aux
+*.log
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+
+# Office lock files
+~$*
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store

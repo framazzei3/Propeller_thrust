@@ -1,0 +1,133 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{groupplots}
+
+\definecolor{mBlue}   {HTML}{0072BD}
+\definecolor{mRed}    {HTML}{D95319}
+\definecolor{mYellow} {HTML}{EDB120}
+\definecolor{mPurple} {HTML}{7E2F8E}
+
+\begin{document}
+\begin{tikzpicture}
+\begin{groupplot}[
+    group style={
+        group size=3 by 1,
+        horizontal sep=1.1cm,
+    },
+    width=5cm, height=4cm,
+    ylabel={Thrust (g)},
+    xlabel style={font=\small},
+    ylabel style={font=\small},
+    tick label style={font=\small},
+    legend style={
+        legend columns=4,
+        font=\small,
+        at={(0,1.1)},
+        anchor=south west,
+        /tikz/every even column/.append style={column sep=10pt},
+    },
+    legend cell align=left,
+    grid=both,
+    enlargelimits=false
+    % xmin=0, ymin=0,
+]
+
+%% ==== SUBPLOT 1 : Thrust vs PWM ==========================================
+\nextgroupplot[
+    xlabel={PWM duty cycle (\%)},
+]
+%% ---- L CCW (mBlue)
+\addplot [only marks, mark=*, color=mBlue, mark size=1.3pt]
+    table [x=PWM_LCCW, y=Tmean_LCCW] {../tikz_data/thrust_vs_pwm.dat};
+    \addlegendentry{\texttt{L\_CCW} meas}
+
+%% ---- R CW (mPurple)
+\addplot [only marks, mark=*, color=mPurple, mark size=1.3pt]
+    table [x=PWM_RCW, y=Tmean_RCW] {../tikz_data/thrust_vs_pwm.dat};
+    \addlegendentry{\texttt{R\_CW} meas}
+
+%% ---- R CCW (mYellow)
+\addplot [only marks, mark=*, color=mYellow, mark size=1.3pt]
+    table [x=PWM_RCCW, y=Tmean_RCCW] {../tikz_data/thrust_vs_pwm.dat};
+    \addlegendentry{\texttt{R\_CCW} meas}
+
+%% ---- L CW (mRed)
+\addplot [only marks, mark=*, color=mRed, mark size=1.3pt]
+    table [x=PWM_LCW, y=Tmean_LCW] {../tikz_data/thrust_vs_pwm.dat};
+    \addlegendentry{\texttt{L\_CW} meas}
+
+%% ---- Pure quadratic fits  k_f D^2
+\addplot [color=mBlue, line width=1pt]
+    table [x=PWM_LCCW, y=Fpure_LCCW] {../tikz_data/thrust_vs_pwm.dat};
+    \addlegendentry{\texttt{L\_CCW} fit}
+
+\addplot [color=mPurple, line width=1pt]
+    table [x=PWM_RCW, y=Fpure_RCW] {../tikz_data/thrust_vs_pwm.dat};
+    \addlegendentry{\texttt{R\_CW} fit}
+
+\addplot [color=mYellow, line width=1pt]
+    table [x=PWM_RCCW, y=Fpure_RCCW] {../tikz_data/thrust_vs_pwm.dat};
+    \addlegendentry{\texttt{R\_CCW} fit}
+
+\addplot [color=mRed, line width=1pt]
+    table [x=PWM_LCW, y=Fpure_LCW] {../tikz_data/thrust_vs_pwm.dat};
+    \addlegendentry{\texttt{L\_CW} fit}
+
+%% ==== SUBPLOT 2 : Thrust vs Power ========================================
+%% NOTE: Pwr_* columns are in mW (MATLAB current data are in mA).
+%% Fit is c*P^(2/3), from momentum theory (f ~ w^2, P_aero ~ w^3).
+\nextgroupplot[
+    xlabel={Power (mW)},
+]
+%% ---- L CCW (mBlue)
+\addplot [only marks, mark=*, color=mBlue, mark size=1.3pt]
+    table [x=Pwr_LCCW, y=Tmean_LCCW] {../tikz_data/thrust_vs_power.dat};
+\addplot [color=mBlue, line width=1pt]
+    table [x=Pwr_LCCW, y=Fp23_LCCW] {../tikz_data/thrust_vs_power.dat};
+%% ---- L CW (mRed)
+\addplot [only marks, mark=*, color=mRed, mark size=1.3pt]
+    table [x=Pwr_LCW, y=Tmean_LCW] {../tikz_data/thrust_vs_power.dat};
+\addplot [color=mRed, line width=1pt]
+    table [x=Pwr_LCW, y=Fp23_LCW] {../tikz_data/thrust_vs_power.dat};
+%% ---- R CCW (mYellow)
+\addplot [only marks, mark=*, color=mYellow, mark size=1.3pt]
+    table [x=Pwr_RCCW, y=Tmean_RCCW] {../tikz_data/thrust_vs_power.dat};
+\addplot [color=mYellow, line width=1pt]
+    table [x=Pwr_RCCW, y=Fp23_RCCW] {../tikz_data/thrust_vs_power.dat};
+%% ---- R CW (mPurple)
+\addplot [only marks, mark=*, color=mPurple, mark size=1.3pt]
+    table [x=Pwr_RCW, y=Tmean_RCW] {../tikz_data/thrust_vs_power.dat};
+\addplot [color=mPurple, line width=1pt]
+    table [x=Pwr_RCW, y=Fp23_RCW] {../tikz_data/thrust_vs_power.dat};
+
+%% ==== SUBPLOT 3 : Thrust vs RPM ==========================================
+%% Fit is k_T n^2 with n in RPM (not rad/s), so k_T is expressed in g/RPM^2.
+\nextgroupplot[
+    xlabel={RPM},
+]
+%% ---- L CCW (mBlue)
+\addplot [only marks, mark=*, color=mBlue, mark size=1.3pt]
+    table [x=RPM_LCCW, y=Tmean_LCCW] {../tikz_data/thrust_vs_rpm.dat};
+\addplot [color=mBlue, line width=1pt]
+    table [x=RPM_LCCW, y=FkT_LCCW] {../tikz_data/thrust_vs_rpm.dat};
+%% ---- L CW (mRed)
+\addplot [only marks, mark=*, color=mRed, mark size=1.3pt]
+    table [x=RPM_LCW, y=Tmean_LCW] {../tikz_data/thrust_vs_rpm.dat};
+\addplot [color=mRed, line width=1pt]
+    table [x=RPM_LCW, y=FkT_LCW] {../tikz_data/thrust_vs_rpm.dat};
+%% ---- R CCW (mYellow)
+\addplot [only marks, mark=*, color=mYellow, mark size=1.3pt]
+    table [x=RPM_RCCW, y=Tmean_RCCW] {../tikz_data/thrust_vs_rpm.dat};
+\addplot [color=mYellow, line width=1pt]
+    table [x=RPM_RCCW, y=FkT_RCCW] {../tikz_data/thrust_vs_rpm.dat};
+%% ---- R CW (mPurple)
+\addplot [only marks, mark=*, color=mPurple, mark size=1.3pt]
+    table [x=RPM_RCW, y=Tmean_RCW] {../tikz_data/thrust_vs_rpm.dat};
+\addplot [color=mPurple, line width=1pt]
+    table [x=RPM_RCW, y=FkT_RCW] {../tikz_data/thrust_vs_rpm.dat};
+
+\end{groupplot}
+\end{tikzpicture}
+\end{document}
