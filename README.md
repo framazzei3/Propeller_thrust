@@ -75,6 +75,3 @@ fits $k_f D^2$, $c\,P^{2/3}$ and $k_n n^2$.*
    ```
    `thrust_characterization.tex` reads the data directly from `../tikz_data/`, so it always shows the
    latest output of `maxon.m`. Requires `pgfplots` (≥ 1.18).
-
-In the thesis the same files live in `Figures/Tikz/chapter_mission/` and `Figures/Data/chapter_mission/`;
-the only change in the copies here is the relative paths.
