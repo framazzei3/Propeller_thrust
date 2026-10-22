@@ -57,11 +57,11 @@ fits $k_f D^2$, $c\,P^{2/3}$ and $k_n n^2$.*
 
 | Path | Content |
 |---|---|
-| `maxon.m` | Analysis script: loads the data, removes the offset, fits $k_f D^2$ (per repetition and on the mean), $c\,P^{2/3}$ vs power and $k_n n^2$ vs RPM, plots everything and exports the data for the thesis figures to `tikz_data/`. |
+| `maxon.m` | Analysis script: loads the data, removes the offset, fits $k_f D^2$ (per repetition and on the mean), $c\,P^{2/3}$ vs power and $k_n n^2$ vs RPM, plots everything and exports the plot data to `tikz_data/`. |
 | `data/` | Raw data: 12 folders `new_<config>_<rep>/`, each with 13 DigiVision exports `new_<config>_<rep>_<VV>.xlsx`, one per supply voltage (`VV` = 00, 05, …, 60 → 0.0–6.0 V). The torque samples are in sheet `Data`, column C. |
 | `prop_rpm_data.xlsx` | Current (mA) and RPM at each voltage step, one sheet per run. The `old_A_*` / `old_B_*` sheets are from earlier tests whose raw data are not included. |
-| `tikz_data/` | Output of `maxon.m` used by the thesis figures: `thrust_vs_pwm.dat`, `thrust_vs_power.dat`, `thrust_vs_rpm.dat`. |
-| `figures/` | Figures as PNG, their sources copied from the thesis (standalone LaTeX/TikZ `.tex`), the bench photo used by `test_setup_thrust.tex` and the CAD render. |
+| `tikz_data/` | Output of `maxon.m` used by the figures: `thrust_vs_pwm.dat`, `thrust_vs_power.dat`, `thrust_vs_rpm.dat`. |
+| `figures/` | Figures as PNG, their standalone LaTeX/TikZ sources (`.tex`), the bench photo used by `test_setup_thrust.tex` and the CAD render. |
 | `Photos/` | Photos of the test bench (26/03/2025): `test_bench_overview.jpg` (wide view of the bench), `test_bench_front.jpg` and `test_bench_front_hires.jpg` (cropped front view, normal and high resolution). |
 
 ## How to reproduce
