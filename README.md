@@ -3,10 +3,6 @@
 Thrust characterisation of the **maxon RE 6** brushed DC coreless motor (Ø6 mm, 0.3 W, part no. 386782)
 with the **Bitcraze 47-17** propeller, the propulsion unit of the indoor blimp developed at CERN.
 
-This repository holds the raw data, the analysis script and the figure sources behind the section
-**Experimental Characterisation** of the PhD thesis (F. Mazzei), chapter *Mission Analysis and System
-Design* → *Hardware Architecture* → *Propulsion* (`\label{sec:exp_dc_motors}`).
-
 ## What is measured
 
 The control models of the blimp take a normalised, signed duty-cycle command $D \in [-1, 1]$ as input.
